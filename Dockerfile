@@ -26,6 +26,20 @@ ENV HOME=/config
 # Plex server port
 EXPOSE 32400
 
+
+RUN echo $(find /usr/lib/plexmediaserver -name plex.js);
+RUN plexjstofix=$(find /usr/lib/plexmediaserver -name plex.js); \ 
+     cp $plexjstofix $plexjstofix".bak"; \
+     sed -i s'/validateTranscoder:function([a-zA-Z],[a-zA-Z]){/&return false;/' $plexjstofix;
+# NOTE(bradleybossard) : The following line(which should be changed to the command above)
+# is recommended by the blog post
+#
+# http://www.htpcguides.com/fix-plex-server-is-not-powerful-enough-on-raspberry-pi-2/
+#
+# but gives me an error when I run it.  It doesn't seem to be required to work, but I am
+# leaving the command here for reference.
+# chattr +i $plexjstofix;
+
 # Ensure any previous pid is removed
 RUN sed -i '2i rm -rf /config/Library/Application\\ Support/Plex\\ Media\\ Server/plexmediaserver.pid' /usr/lib/plexmediaserver/start.sh
 
