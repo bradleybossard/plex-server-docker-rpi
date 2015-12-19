@@ -7,5 +7,3 @@ plex:
   volumes:
    - /home/pi/plex/config:/config
    - /home/pi/plex/data:/data
-   - /mnt/worldbook1:/mnt/worldbook1
-   - /mnt/worldbook2:/mnt/worldbook2
